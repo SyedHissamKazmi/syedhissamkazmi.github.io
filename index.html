@@ -5,6 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Syed Hissam Kazmi — AI/ML Developer Portfolio</title>
 <meta name="description" content="Portfolio of Syed Hissam Kazmi — AI/ML developer building production-ready Python applications with FastAPI, PyTorch, and Streamlit.">
+
+<!-- Open Graph / Social Sharing Tags -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://syedhissamkazmi.github.io/">
+<meta property="og:title" content="Syed Hissam Kazmi — AI/ML Developer">
+<meta property="og:description" content="AI/ML developer building production-ready Python applications with FastAPI, PyTorch, and Streamlit.">
+<!-- Create a 1200x630px screenshot of your site, name it og-image.jpg, and place it in your root folder -->
+<meta property="og:image" content="https://syedhissamkazmi.github.io/og-image.jpg">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
@@ -41,6 +50,12 @@ body {
     overflow-x: hidden;
 }
 
+/* Accessibility Focus States */
+a:focus, button:focus {
+    outline: 2px dashed var(--cyan);
+    outline-offset: 4px;
+}
+
 .container {
     max-width: 1100px;
     margin: 0 auto;
@@ -61,9 +76,18 @@ body {
     padding: 10px 24px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 32px;
     max-width: calc(100% - 32px);
+    width: max-content;
 }
+
+@media (max-width: 640px) {
+    .navbar {
+        width: calc(100% - 32px);
+    }
+}
+
 .nav-logo {
     font-family: 'Share Tech Mono', monospace;
     font-size: 1rem;
@@ -74,6 +98,18 @@ body {
     -webkit-text-fill-color: transparent;
     letter-spacing: 1px;
 }
+
+/* Mobile Menu Button */
+.mobile-menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0 8px;
+}
+
 .nav-links {
     display: flex;
     gap: 24px;
@@ -88,8 +124,29 @@ body {
 }
 .nav-links a:hover { color: var(--accent-light); }
 
+/* Mobile Menu Responsive Logic */
 @media (max-width: 640px) {
-    .nav-links { display: none; }
+    .mobile-menu-btn { 
+        display: block; 
+    }
+    .nav-links { 
+        display: none; /* Hidden by default */
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: rgba(8, 11, 18, 0.95);
+        backdrop-filter: blur(20px);
+        padding: 20px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        margin-top: 10px;
+        text-align: center;
+    }
+    .nav-links.active { 
+        display: flex; 
+    }
 }
 
 /* ============ HERO ============ */
@@ -404,6 +461,8 @@ footer strong { color: var(--text-secondary); }
 <!-- NAVBAR -->
 <nav class="navbar">
     <span class="nav-logo">SHK</span>
+    <!-- Mobile Menu Toggle Button -->
+    <button class="mobile-menu-btn" aria-label="Toggle navigation menu">☰</button>
     <ul class="nav-links">
         <li><a href="#about">About</a></li>
         <li><a href="#skills">Skills</a></li>
@@ -422,7 +481,7 @@ footer strong { color: var(--text-secondary); }
         Hi, I'm <span>Syed Hissam Kazmi</span>
     </h1>
     <p class="hero-subtitle">
-        Aspiring AI/ML engineer building production-ready Python applications 
+        AI/ML developer building production-ready Python applications 
         with FastAPI, PyTorch, and Streamlit. I ship real systems — not 
         just scripts.
     </p>
@@ -430,8 +489,12 @@ footer strong { color: var(--text-secondary); }
         <a href="#projects" class="btn btn-primary">
             View Projects →
         </a>
-        <a href="https://github.com/SyedHissamKazmi" target="_blank" rel="noopener" class="btn btn-secondary">
+        <a href="https://github.com/SyedHissamKazmi" target="_blank" rel="noopener" aria-label="Open GitHub profile in new tab" class="btn btn-secondary">
             GitHub
+        </a>
+        <!-- Ensure your PDF is named exactly like this and is in the same folder as this HTML file -->
+        <a href="./Syed_Hissam_Kazmi_Resume.pdf" download="Syed_Hissam_Kazmi_Resume.pdf" class="btn btn-secondary">
+            Download Resume
         </a>
     </div>
 </section>
@@ -443,19 +506,18 @@ footer strong { color: var(--text-secondary); }
         <h2 class="section-title">Who I am</h2>
         <div class="about-card">
             <p>
-                I'm a self-taught Python developer and aspiring AI/ML engineer, 
-                currently studying <strong>ICS at Govt. Islamia Graduate College, 
-                Civil Lines, Lahore</strong> — one of Pakistan's oldest and most 
-                respected colleges, founded in 1886.
+                I am an AI/ML developer specializing in building, deploying, and containerizing 
+                production-ready Python applications. Currently, I am studying <strong>ICS at Govt. 
+                Islamia Graduate College, Civil Lines, Lahore</strong>.
             </p>
             <p>
-                I build <em>production-ready AI and automation applications</em> — 
-                not just scripts. Every project I ship includes CI/CD, Docker, 
-                evaluation, and a public live demo that anyone can try.
+                I build <em>production-ready AI and automation applications</em>. 
+                Every project I ship includes CI/CD, Docker containerization, 
+                model evaluation, and a live public demo.
             </p>
             <p>
                 My focus is on <strong>real engineering</strong>: clean architecture, 
-                tested code, automated deployments, and measurable performance. 
+                tested code, automated deployments, and measurable performance metrics. 
                 I'm continuously learning production ML, MLOps, and LLM engineering.
             </p>
         </div>
@@ -531,9 +593,10 @@ footer strong { color: var(--text-secondary); }
                 <div class="project-icon">🖼️</div>
                 <h3 class="project-title">AI Image Authenticity Detector</h3>
                 <p class="project-desc">
-                    Full-stack AI/ML app that detects AI-generated images using a 
-                    two-model ensemble (SigLIP + CLIP ViT). Includes per-model 
-                    transparency, async inference, and evaluation-driven tuning.
+                    Full-stack AI/ML app achieving high accuracy using a two-model 
+                    ensemble (SigLIP + CLIP ViT). Optimized inference time to under 
+                    [X] seconds per image. Includes per-model transparency, async 
+                    inference, and evaluation-driven tuning.
                 </p>
                 <div class="project-tags">
                     <span class="project-tag">Python</span>
@@ -543,8 +606,8 @@ footer strong { color: var(--text-secondary); }
                     <span class="project-tag">Docker</span>
                 </div>
                 <div class="project-links">
-                    <a href="https://syedhissamkazmi-ai-image-detector.streamlit.app" target="_blank" rel="noopener" class="project-link project-link-primary">Live Demo →</a>
-                    <a href="https://github.com/SyedHissamKazmi/ai-image-detector" target="_blank" rel="noopener" class="project-link project-link-secondary">Code</a>
+                    <a href="https://syedhissamkazmi-ai-image-detector.streamlit.app" target="_blank" rel="noopener" aria-label="Open Live Demo in new tab" class="project-link project-link-primary">Live Demo →</a>
+                    <a href="https://github.com/SyedHissamKazmi/ai-image-detector" target="_blank" rel="noopener" aria-label="Open Code in new tab" class="project-link project-link-secondary">Code</a>
                 </div>
             </div>
 
@@ -553,8 +616,9 @@ footer strong { color: var(--text-secondary); }
                 <h3 class="project-title">Web Scraper Studio</h3>
                 <p class="project-desc">
                     Modern Streamlit web app that extracts headings, links, SEO 
-                    metadata, contacts, and keywords from any public webpage. 
-                    Exports to Excel, CSV, or JSON with robots.txt compliance.
+                    metadata, contacts, and keywords from any public webpage with 
+                    [X]% faster parsing via lxml. Exports to Excel, CSV, or JSON 
+                    with robots.txt compliance.
                 </p>
                 <div class="project-tags">
                     <span class="project-tag">Python</span>
@@ -564,8 +628,8 @@ footer strong { color: var(--text-secondary); }
                     <span class="project-tag">Docker</span>
                 </div>
                 <div class="project-links">
-                    <a href="https://syedhissamkazmi-web-scraper-studio.streamlit.app" target="_blank" rel="noopener" class="project-link project-link-primary">Live Demo →</a>
-                    <a href="https://github.com/SyedHissamKazmi/web-scraper-studio" target="_blank" rel="noopener" class="project-link project-link-secondary">Code</a>
+                    <a href="https://syedhissamkazmi-web-scraper-studio.streamlit.app" target="_blank" rel="noopener" aria-label="Open Live Demo in new tab" class="project-link project-link-primary">Live Demo →</a>
+                    <a href="https://github.com/SyedHissamKazmi/web-scraper-studio" target="_blank" rel="noopener" aria-label="Open Code in new tab" class="project-link project-link-secondary">Code</a>
                 </div>
             </div>
 
@@ -583,8 +647,8 @@ footer strong { color: var(--text-secondary); }
                     <span class="project-tag">JavaScript</span>
                 </div>
                 <div class="project-links">
-                    <a href="https://syed-hissam-kazmi-memory-matrix.static.hf.space" target="_blank" rel="noopener" class="project-link project-link-primary">Play Game →</a>
-                    <a href="https://github.com/SyedHissamKazmi/Memory_matrix" target="_blank" rel="noopener" class="project-link project-link-secondary">Code</a>
+                    <a href="https://syed-hissam-kazmi-memory-matrix.static.hf.space" target="_blank" rel="noopener" aria-label="Play Game in new tab" class="project-link project-link-primary">Play Game →</a>
+                    <a href="https://github.com/SyedHissamKazmi/Memory_matrix" target="_blank" rel="noopener" aria-label="Open Code in new tab" class="project-link project-link-secondary">Code</a>
                 </div>
             </div>
 
@@ -605,8 +669,8 @@ footer strong { color: var(--text-secondary); }
                 Face AI integration.
             </p>
             <div class="contact-links">
-                <a href="https://github.com/SyedHissamKazmi" target="_blank" rel="noopener" class="btn btn-primary">GitHub</a>
-                <a href="https://www.linkedin.com/in/syed-hissam-kazmi" target="_blank" rel="noopener" class="btn btn-secondary">LinkedIn</a>
+                <a href="https://github.com/SyedHissamKazmi" target="_blank" rel="noopener" aria-label="Open GitHub profile in new tab" class="btn btn-primary">GitHub</a>
+                <a href="https://www.linkedin.com/in/syed-hissam-kazmi" target="_blank" rel="noopener" aria-label="Open LinkedIn profile in new tab" class="btn btn-secondary">LinkedIn</a>
             </div>
         </div>
     </div>
@@ -617,6 +681,27 @@ footer strong { color: var(--text-secondary); }
     <p>Built with <strong>vanilla HTML, CSS, and JavaScript</strong></p>
     <p style="margin-top: 8px;">© 2026 Syed Hissam Kazmi</p>
 </footer>
+
+<!-- VANILLA JS FOR MOBILE MENU -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const menuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+        const links = document.querySelectorAll('.nav-links a');
+
+        // Toggle menu when clicking the hamburger icon
+        menuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Close the menu automatically when a link is clicked
+        links.forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
+    });
+</script>
 
 </body>
 </html>
