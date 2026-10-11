@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Syed Hissam Kazmi — AI/ML Developer Portfolio</title>
+<meta name="description" content="Portfolio of Syed Hissam Kazmi — AI/ML developer building production-ready Python applications with FastAPI, PyTorch, and Streamlit.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+:root {
+    --bg-primary: #080b12;
+    --bg-secondary: #0f1419;
+    --bg-card: #121821;
+    --text-primary: #f5f7fb;
+    --text-secondary: #a6afc0;
+    --text-muted: #697386;
+    --accent: #7c6cff;
+    --accent-light: #9b91ff;
+    --cyan: #06b6d4;
+    --green: #22c55e;
+    --border: rgba(157, 147, 255, 0.15);
+    --border-hover: rgba(157, 147, 255, 0.4);
+    --radius: 20px;
+    --radius-sm: 12px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+    background: radial-gradient(circle at 15% 15%, rgba(124, 108, 255, 0.10) 0%, transparent 55%),
+                radial-gradient(circle at 85% 85%, rgba(6, 182, 212, 0.10) 0%, transparent 55%),
+                linear-gradient(135deg, #080b12 0%, #0f1419 50%, #0a0d14 100%);
+    color: var(--text-primary);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    line-height: 1.6;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+/* ============ NAVBAR ============ */
+.navbar {
+    position: fixed;
+    top: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    background: rgba(8, 11, 18, 0.85);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 10px 24px;
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    max-width: calc(100% - 32px);
+}
+.nav-logo {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 1rem;
+    font-weight: 700;
+    background: linear-gradient(90deg, #9d93ff, #65a8ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: 1px;
+}
+.nav-links {
+    display: flex;
+    gap: 24px;
+    list-style: none;
+}
+.nav-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--accent-light); }
+
+@media (max-width: 640px) {
+    .nav-links { display: none; }
+}
+
+/* ============ HERO ============ */
+.hero {
+    padding: 160px 24px 80px;
+    text-align: center;
+    position: relative;
+}
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 18px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: rgba(124, 108, 255, 0.08);
+    color: var(--accent-light);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    margin-bottom: 24px;
+}
+.hero-badge-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--green);
+    box-shadow: 0 0 12px var(--green);
+    animation: pulse 2s infinite;
+}
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+.hero h1 {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    line-height: 1.05;
+    margin-bottom: 20px;
+}
+.hero h1 span {
+    background: linear-gradient(90deg, #9d93ff 0%, #65a8ff 50%, #5ec3ff 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+}
+.hero-subtitle {
+    font-size: 1.15rem;
+    color: var(--text-secondary);
+    max-width: 620px;
+    margin: 0 auto 40px;
+}
+.hero-actions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 28px;
+    border-radius: 14px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    border: none;
+    cursor: pointer;
+}
+.btn-primary {
+    background: linear-gradient(90deg, #7c6cff, #06b6d4);
+    color: white;
+    box-shadow: 0 8px 30px rgba(124, 108, 255, 0.35);
+}
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(124, 108, 255, 0.55);
+}
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+}
+.btn-secondary:hover {
+    border-color: var(--accent);
+    background: rgba(124, 108, 255, 0.08);
+}
+
+/* ============ SECTIONS ============ */
+section {
+    padding: 80px 24px;
+}
+.section-label {
+    display: block;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--accent-light);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    text-align: center;
+}
+.section-title {
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    text-align: center;
+    margin-bottom: 16px;
+}
+.section-desc {
+    text-align: center;
+    color: var(--text-secondary);
+    max-width: 560px;
+    margin: 0 auto 48px;
+}
+
+/* ============ ABOUT ============ */
+.about-card {
+    background: rgba(18, 24, 36, 0.7);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 40px;
+    max-width: 800px;
+    margin: 0 auto;
+    backdrop-filter: blur(10px);
+}
+.about-card p {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    margin-bottom: 16px;
+    line-height: 1.7;
+}
+.about-card p:last-child { margin-bottom: 0; }
+.about-card strong { color: var(--text-primary); }
+.about-card em { color: var(--accent-light); font-style: normal; }
+
+/* ============ SKILLS ============ */
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+.skill-group {
+    background: rgba(18, 24, 36, 0.7);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 24px;
+    transition: border-color 0.3s;
+}
+.skill-group:hover { border-color: var(--border-hover); }
+.skill-group h4 {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--accent-light);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+}
+.skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+.skill-tag {
+    padding: 6px 12px;
+    background: rgba(124, 108, 255, 0.10);
+    border: 1px solid rgba(124, 108, 255, 0.2);
+    border-radius: 999px;
+    color: var(--text-primary);
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+/* ============ PROJECTS ============ */
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 24px;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+.project-card {
+    background: rgba(18, 24, 36, 0.7);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 32px;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    backdrop-filter: blur(10px);
+}
+.project-card:hover {
+    border-color: var(--border-hover);
+    transform: translateY(-4px);
+    box-shadow: 0 20px 60px rgba(124, 108, 255, 0.15);
+}
+.project-icon {
+    font-size: 2.5rem;
+    margin-bottom: 16px;
+}
+.project-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    letter-spacing: -0.02em;
+}
+.project-desc {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+    flex-grow: 1;
+    line-height: 1.6;
+}
+.project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 20px;
+}
+.project-tag {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.7rem;
+    padding: 4px 10px;
+    background: rgba(6, 182, 212, 0.10);
+    border: 1px solid rgba(6, 182, 212, 0.2);
+    border-radius: 999px;
+    color: var(--cyan);
+}
+.project-links {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+.project-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 18px;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+.project-link-primary {
+    background: linear-gradient(90deg, #7c6cff, #06b6d4);
+    color: white;
+}
+.project-link-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(124, 108, 255, 0.4);
+}
+.project-link-secondary {
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+}
+.project-link-secondary:hover {
+    color: var(--text-primary);
+    border-color: var(--accent);
+}
+
+/* ============ CONTACT ============ */
+.contact-card {
+    background: rgba(18, 24, 36, 0.7);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 48px 40px;
+    max-width: 720px;
+    margin: 0 auto;
+    text-align: center;
+    backdrop-filter: blur(10px);
+}
+.contact-card h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+.contact-card p {
+    color: var(--text-secondary);
+    margin-bottom: 28px;
+}
+.contact-links {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* ============ FOOTER ============ */
+footer {
+    text-align: center;
+    padding: 60px 24px 40px;
+    border-top: 1px solid var(--border);
+    margin-top: 80px;
+}
+footer p {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+footer strong { color: var(--text-secondary); }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+    <span class="nav-logo">SHK</span>
+    <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+    </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-badge">
+        <span class="hero-badge-dot"></span>
+        Available for freelance Python / AI work
+    </div>
+    <h1>
+        Hi, I'm <span>Syed Hissam Kazmi</span>
+    </h1>
+    <p class="hero-subtitle">
+        Aspiring AI/ML engineer building production-ready Python applications 
+        with FastAPI, PyTorch, and Streamlit. I ship real systems — not 
+        just scripts.
+    </p>
+    <div class="hero-actions">
+        <a href="#projects" class="btn btn-primary">
+            View Projects →
+        </a>
+        <a href="https://github.com/SyedHissamKazmi" target="_blank" rel="noopener" class="btn btn-secondary">
+            GitHub
+        </a>
+    </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+    <div class="container">
+        <span class="section-label">About Me</span>
+        <h2 class="section-title">Who I am</h2>
+        <div class="about-card">
+            <p>
+                I'm a self-taught Python developer and aspiring AI/ML engineer, 
+                currently studying <strong>ICS at Govt. Islamia Graduate College, 
+                Civil Lines, Lahore</strong> — one of Pakistan's oldest and most 
+                respected colleges, founded in 1886.
+            </p>
+            <p>
+                I build <em>production-ready AI and automation applications</em> — 
+                not just scripts. Every project I ship includes CI/CD, Docker, 
+                evaluation, and a public live demo that anyone can try.
+            </p>
+            <p>
+                My focus is on <strong>real engineering</strong>: clean architecture, 
+                tested code, automated deployments, and measurable performance. 
+                I'm continuously learning production ML, MLOps, and LLM engineering.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+    <div class="container">
+        <span class="section-label">Skills</span>
+        <h2 class="section-title">What I work with</h2>
+        <p class="section-desc">
+            Tools and technologies I use to build production applications.
+        </p>
+
+        <div class="skills-grid">
+            <div class="skill-group">
+                <h4>AI / ML</h4>
+                <div class="skill-tags">
+                    <span class="skill-tag">PyTorch</span>
+                    <span class="skill-tag">Hugging Face</span>
+                    <span class="skill-tag">Transformers</span>
+                    <span class="skill-tag">scikit-learn</span>
+                    <span class="skill-tag">Pandas</span>
+                </div>
+            </div>
+
+            <div class="skill-group">
+                <h4>Backend</h4>
+                <div class="skill-tags">
+                    <span class="skill-tag">Python</span>
+                    <span class="skill-tag">FastAPI</span>
+                    <span class="skill-tag">Streamlit</span>
+                    <span class="skill-tag">REST APIs</span>
+                </div>
+            </div>
+
+            <div class="skill-group">
+                <h4>DevOps</h4>
+                <div class="skill-tags">
+                    <span class="skill-tag">Docker</span>
+                    <span class="skill-tag">GitHub Actions</span>
+                    <span class="skill-tag">CI/CD</span>
+                    <span class="skill-tag">Git</span>
+                </div>
+            </div>
+
+            <div class="skill-group">
+                <h4>Data & Tools</h4>
+                <div class="skill-tags">
+                    <span class="skill-tag">Web Scraping</span>
+                    <span class="skill-tag">lxml</span>
+                    <span class="skill-tag">openpyxl</span>
+                    <span class="skill-tag">SQLite</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+    <div class="container">
+        <span class="section-label">Portfolio</span>
+        <h2 class="section-title">Featured Projects</h2>
+        <p class="section-desc">
+            Live applications with public demos. Try them yourself.
+        </p>
+
+        <div class="projects-grid">
+
+            <div class="project-card">
+                <div class="project-icon">🖼️</div>
+                <h3 class="project-title">AI Image Authenticity Detector</h3>
+                <p class="project-desc">
+                    Full-stack AI/ML app that detects AI-generated images using a 
+                    two-model ensemble (SigLIP + CLIP ViT). Includes per-model 
+                    transparency, async inference, and evaluation-driven tuning.
+                </p>
+                <div class="project-tags">
+                    <span class="project-tag">Python</span>
+                    <span class="project-tag">FastAPI</span>
+                    <span class="project-tag">PyTorch</span>
+                    <span class="project-tag">Streamlit</span>
+                    <span class="project-tag">Docker</span>
+                </div>
+                <div class="project-links">
+                    <a href="https://syedhissamkazmi-ai-image-detector.streamlit.app" target="_blank" rel="noopener" class="project-link project-link-primary">Live Demo →</a>
+                    <a href="https://github.com/SyedHissamKazmi/ai-image-detector" target="_blank" rel="noopener" class="project-link project-link-secondary">Code</a>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-icon">🕸️</div>
+                <h3 class="project-title">Web Scraper Studio</h3>
+                <p class="project-desc">
+                    Modern Streamlit web app that extracts headings, links, SEO 
+                    metadata, contacts, and keywords from any public webpage. 
+                    Exports to Excel, CSV, or JSON with robots.txt compliance.
+                </p>
+                <div class="project-tags">
+                    <span class="project-tag">Python</span>
+                    <span class="project-tag">Streamlit</span>
+                    <span class="project-tag">Requests</span>
+                    <span class="project-tag">lxml</span>
+                    <span class="project-tag">Docker</span>
+                </div>
+                <div class="project-links">
+                    <a href="https://syedhissamkazmi-web-scraper-studio.streamlit.app" target="_blank" rel="noopener" class="project-link project-link-primary">Live Demo →</a>
+                    <a href="https://github.com/SyedHissamKazmi/web-scraper-studio" target="_blank" rel="noopener" class="project-link project-link-secondary">Code</a>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-icon">🎮</div>
+                <h3 class="project-title">Memory Matrix</h3>
+                <p class="project-desc">
+                    A neon-themed memory card game built for College Tech Fest 2025. 
+                    Features three difficulty levels, timer, best score tracking, 
+                    sound effects, and fullscreen mode. Pure HTML, CSS, JavaScript.
+                </p>
+                <div class="project-tags">
+                    <span class="project-tag">HTML</span>
+                    <span class="project-tag">CSS</span>
+                    <span class="project-tag">JavaScript</span>
+                </div>
+                <div class="project-links">
+                    <a href="https://syed-hissam-kazmi-memory-matrix.static.hf.space" target="_blank" rel="noopener" class="project-link project-link-primary">Play Game →</a>
+                    <a href="https://github.com/SyedHissamKazmi/Memory_matrix" target="_blank" rel="noopener" class="project-link project-link-secondary">Code</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+    <div class="container">
+        <span class="section-label">Get in Touch</span>
+        <h2 class="section-title">Let's build something</h2>
+        <div class="contact-card">
+            <h3>Available for freelance work</h3>
+            <p>
+                I help businesses and individuals with Python automation, 
+                web scraping, FastAPI APIs, Streamlit dashboards, and Hugging 
+                Face AI integration.
+            </p>
+            <div class="contact-links">
+                <a href="https://github.com/SyedHissamKazmi" target="_blank" rel="noopener" class="btn btn-primary">GitHub</a>
+                <a href="https://www.linkedin.com/in/syed-hissam-kazmi" target="_blank" rel="noopener" class="btn btn-secondary">LinkedIn</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <p>Built with <strong>vanilla HTML, CSS, and JavaScript</strong></p>
+    <p style="margin-top: 8px;">© 2026 Syed Hissam Kazmi</p>
+</footer>
+
+</body>
+</html>
