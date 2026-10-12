@@ -730,12 +730,30 @@
         <div class="contact-content glass-panel">
             <h3>Initiate Connection</h3>
             <p>Currently open to freelance Python/AI projects, open-source collaboration, and ML roles. Let's build systems that scale.</p>
-            <div class="btn-group">
-                <a href="mailto:your.email@example.com" class="btn btn-primary">Execute Email Protocol</a>
+            
+            <form id="contactForm" style="display: flex; flex-direction: column; gap: 16px; margin-top: 24px; text-align: left; width: 100%; max-width: 500px; margin-left: auto; margin-right: auto;">
+                <input type="email" id="email" placeholder="Your Email" required 
+                       style="width: 100%; padding: 14px; border-radius: 8px; border: 1px solid rgba(124, 108, 255, 0.2); background: rgba(0,0,0,0.2); color: #fff; font-family: inherit; outline: none;">
+                
+                <input type="text" id="name" placeholder="Your Name" required 
+                       style="width: 100%; padding: 14px; border-radius: 8px; border: 1px solid rgba(124, 108, 255, 0.2); background: rgba(0,0,0,0.2); color: #fff; font-family: inherit; outline: none;">
+                
+                <input type="text" id="subject" placeholder="Subject" required 
+                       style="width: 100%; padding: 14px; border-radius: 8px; border: 1px solid rgba(124, 108, 255, 0.2); background: rgba(0,0,0,0.2); color: #fff; font-family: inherit; outline: none;">
+                
+                <textarea id="message" placeholder="Message" required 
+                          style="width: 100%; padding: 14px; border-radius: 8px; border: 1px solid rgba(124, 108, 255, 0.2); background: rgba(0,0,0,0.2); color: #fff; font-family: inherit; min-height: 120px; outline: none;"></textarea>
+                
+                <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">Execute Message Protocol</button>
+                <p id="statusMessage" style="margin-top: 8px; display: none; text-align: center; color: #a6afc0;"></p>
+            </form>
+
+            <div class="btn-group" style="margin-top: 24px;">
                 <a href="https://www.linkedin.com/in/syed-hissam-kazmi" target="_blank" class="btn btn-outline">LinkedIn Network</a>
             </div>
         </div>
     </section>
+
 
     <footer>
         <p>Built with Vanilla HTML, CSS, JS & deployed via <span>Vercel Edge Network</span>.</p>
@@ -943,5 +961,41 @@
         initParticles();
         animateParticles();
     </script>
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const statusText = document.getElementById('statusMessage');
+            statusText.style.display = 'block';
+            statusText.style.color = '#a6afc0';
+            statusText.innerText = 'Transmitting...';
+
+            const payload = {
+                email: document.getElementById('email').value,
+                name: document.getElementById('name').value,
+                subject: document.getElementById('subject').value,
+                message: document.getElementById('message').value
+            };
+
+            try {
+                const response = await fetch('/api/contact', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (response.ok) {
+                    statusText.style.color = '#00ffcc';
+                    statusText.innerText = 'Message transmitted successfully!';
+                    document.getElementById('contactForm').reset();
+                } else {
+                    throw new Error('API Error');
+                }
+            } catch (error) {
+                statusText.style.color = '#ff4444';
+                statusText.innerText = 'Failed to transmit. Please try again.';
+            }
+        });
+    </script>
+
 </body>
 </html>
