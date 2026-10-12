@@ -1,5 +1,7 @@
-from fastapi import FastAPI, Request
+import os
+from fastapi import FastAPI
 from pydantic import BaseModel
+import requests
 
 app = FastAPI()
 
@@ -11,10 +13,17 @@ class ContactForm(BaseModel):
 
 @app.post("/api/contact")
 async def handle_contact(form_data: ContactForm):
-    # In a production environment, you would add logic here to send an email via SendGrid, 
-    # push the data to a Discord webhook, or insert it into a database like Supabase.
+    # This securely pulls your link from Vercel's settings
+    webhook_url = os.getenv("DISCORD_WEBHOOK_URL")
     
-    print(f"New message from {form_data.name} ({form_data.email})")
-    print(f"Subject: {form_data.subject}")
+    discord_payload = {
+        "content": f"🚀 **New Message from Portfolio!**\n\n**Name:** {form_data.name}\n**Email:** {form_data.email}\n**Subject:** {form_data.subject}\n**Message:**\n```\n{form_data.message}\n```"
+    }
     
-    return {"status": "success", "message": "Your message has been securely received."}
+    try:
+        if webhook_url:
+            requests.post(webhook_url, json=discord_payload)
+    except Exception as e:
+        print(f"Error: {e}")
+        
+    return {"status": "success"}
